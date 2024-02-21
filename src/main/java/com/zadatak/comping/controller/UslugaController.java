@@ -6,6 +6,9 @@ import com.zadatak.comping.service.UslugaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 public class UslugaController {
 
@@ -15,9 +18,14 @@ public class UslugaController {
     @Autowired
     UslugaRepository uslugaRepository;
 
+    @GetMapping("/usluge")
+    public List<Usluga> getUsluge(@RequestParam Map<String, Object> properties){
+        return uslugaService.getUsluge(properties);
+    }
+
     @GetMapping("/usluge/opisUsluga")
-    public void getOpisUsluga(){
-        uslugaService.getOpisUsluga();
+    public List<String> getOpisUsluga(){
+        return uslugaService.getOpisUsluga();
     }
 
     @PostMapping("/new-usluga")

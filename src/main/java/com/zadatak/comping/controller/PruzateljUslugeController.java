@@ -5,11 +5,19 @@ import com.zadatak.comping.service.PruzateljUslugeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 public class PruzateljUslugeController {
 
     @Autowired
     private PruzateljUslugeService pruzateljUslugeService;
+
+    @GetMapping("/pruzateljUsluge")
+    public List<PruzateljUsluge> getPruzateljUsluge(@RequestParam Map<String, Object> properties){
+        return pruzateljUslugeService.getUsluge(properties);
+    }
 
     @PostMapping("/new-pruzatelj")
     public void addNewPruzatelj(@RequestBody PruzateljUsluge pruzateljUsluge){
