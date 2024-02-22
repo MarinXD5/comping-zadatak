@@ -6,6 +6,8 @@ import com.zadatak.comping.projections.UslugaOpisProjection;
 import com.zadatak.comping.repository.PruzateljUslugaRepository;
 import com.zadatak.comping.repository.UslugaRepository;
 import com.zadatak.comping.specification.UslugaSpecification;
+import jakarta.transaction.Transactional;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -52,23 +54,20 @@ public class UslugaService {
         return null;
     }
 
-    public void addNewUsluga(Usluga usluga) {
+    public void addNewUsluga(Usluga usluga, PruzateljUsluge pruzateljUsluge) {
         /* Metoda za dodavanje nove usluge. Prima request body i kreira novi Usluga objekt te setira
         *  odgovarajuća polja. Lista pruzateljUslugeIds se sastoji od lista ID-ova koji se mapiraju prema idu pruzateljaUsluga
         * koji se zatim spremaju u međutablicu u bp **/
         try {
-            Usluga newUsluga = new Usluga();
-            newUsluga.setOpisUsluge(usluga.getOpisUsluge());
+            pruzateljUslugaRepository.save(pruzateljUsluge);
 
-            List<Long> pruzateljUslugeIds = usluga.getPruzateljiUsluge().stream()
-                    .map(PruzateljUsluge::getId)
-                    .collect(Collectors.toList());
+            usluga.getPruzateljiUsluge().add(pruzateljUsluge);
 
-            List<PruzateljUsluge> pruzateljiUslugeEntities = pruzateljUslugaRepository.findAllById(pruzateljUslugeIds);
+            uslugaRepository.save(usluga);
 
-            newUsluga.getPruzateljiUsluge().addAll(pruzateljiUslugeEntities);
+            pruzateljUsluge.getUsluge().add(usluga);
 
-            uslugaRepository.save(newUsluga);
+            pruzateljUslugaRepository.save(pruzateljUsluge);
         } catch (Exception e) {
             System.out.println("Error while adding new usluga: " + e.getMessage());
         }

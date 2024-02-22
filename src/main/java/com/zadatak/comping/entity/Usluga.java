@@ -1,6 +1,8 @@
 package com.zadatak.comping.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +16,9 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Usluga {
 
     @Id
@@ -24,7 +29,7 @@ public class Usluga {
     @Column(name = "opisUsluge")
     private String opisUsluge;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "pruzateljUsluga",
             joinColumns = @JoinColumn(name = "usluga_id"),

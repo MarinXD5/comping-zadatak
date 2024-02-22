@@ -1,5 +1,6 @@
 package com.zadatak.comping.controller;
 
+import com.zadatak.comping.entity.PruzateljUsluge;
 import com.zadatak.comping.entity.Usluga;
 import com.zadatak.comping.repository.UslugaRepository;
 import com.zadatak.comping.service.UslugaService;
@@ -29,8 +30,8 @@ public class UslugaController {
     }
 
     @PostMapping("/new-usluga")
-    public void addNewUsluga(@RequestBody Usluga usluga) {
-        uslugaService.addNewUsluga(usluga);
+    public void addNewUsluga(@RequestBody Usluga usluga, @RequestBody PruzateljUsluge pruzateljUsluge) {
+        uslugaService.addNewUsluga(usluga, pruzateljUsluge);
     }
 
     @PutMapping("/api/usluga/{id}")
