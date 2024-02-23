@@ -70,10 +70,10 @@ public class Service_Service {
     public List<String> getServiceDesc() {
         /* Method to fetch service description using projections **/
         try {
-            List<ServiceDescriptionProjection> opisUsluga = serviceRepository.findAllServiceDescription();
+            List<ServiceDescriptionProjection> serviceDescription = serviceRepository.findAllServiceDescription();
             List<String> serviceDescriptionList = new ArrayList<>();
 
-            for (ServiceDescriptionProjection projection : opisUsluga) {
+            for (ServiceDescriptionProjection projection : serviceDescription) {
                 serviceDescriptionList.add(projection.getServiceDescription());
             }
             return serviceDescriptionList;
@@ -83,6 +83,7 @@ public class Service_Service {
         return null;
     }
 
+    @Transactional
     public void editService(long id_service, long id_provider_existing, long id_provider_wanted, Service service) {
         /* Method for editing a Service object and it's associations.
         *  Takes in ServiceID, ExistingProviderID, WantedProviderID and Service object **/
@@ -97,7 +98,6 @@ public class Service_Service {
 
             newService.getServiceProviders().add(serviceProviderWanted);
 
-            serviceRepository.save(newService);
         } catch (Exception e) {
             System.out.println("Error while editing service: " + e.getMessage());
         }

@@ -21,7 +21,8 @@ public class ServiceProviderController {
 
     @GetMapping("/providers")
     public List<ServiceProvider> getProviders(){
-        return serviceProviderRepository.findAll();
+        List<ServiceProvider> list = serviceProviderRepository.findAll();
+        return list;
     }
 
     @GetMapping("/service-provider")
