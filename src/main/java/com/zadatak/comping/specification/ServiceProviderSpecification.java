@@ -1,6 +1,6 @@
 package com.zadatak.comping.specification;
 
-import com.zadatak.comping.entity.PruzateljUsluge;
+import com.zadatak.comping.entity.ServiceProvider;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class PruzateljUslugaSpecification {
+public class ServiceProviderSpecification {
 
-    public static Specification<PruzateljUsluge> hasProperties(Map<String, Object> properties){
-        /* Metoda koja implementira dinamicko filtriranje. root je Root objekt koji predstavlja PruzateljUsluge entitet
-        *  query je CriteriaQuery objekt koji predstavlja query dok je cb CriteriaBuilder objekt koji "konstruira" querry.
-        *  Iterira se kroz entrySet i dodaje u predicates koji provjerava je li field (entry.getKey()) jednak value (entry.getValue()).**/
+    public static Specification<ServiceProvider> hasProperties(Map<String, Object> properties){
+        /* Method that implements dynamic filtering. root is a Root object that represents Service entity. Query is a
+           CriteriaQuery object which represents a query, while the cb is a CriteriaBuilder object which constructs a query.
+           The for loop iterates through entrySet and adds to predicates list those cbs whose entry.getKey() is equal to entry.getValue() fields **/
         return ((root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             for(Map.Entry<String, Object> entry : properties.entrySet()){

@@ -15,7 +15,7 @@ Svaki API poziva jednu controller metodu.
 ### Kreiranje novih podataka
 
 Za kreiranje novih entrya u bazi podataka, potrebno je prvo kreirati novog pruzatelja. Razlog tomu je, jer iako postoji veza vise-na-vise, jedna strana mora biti "owning" strana. Za potrebe
-ovog zadatka to je Usluga. Stoga, da bi se mogli kreirati i vezati podaci u međutablici, potrebno je prvo kreirati pružatelja usluga, a zatim samu uslugu. Da bi se kreirao novi pružatelj usluge
+ovog zadatka to je Usluga. Stoga, da bi se mogli kreirati i vezati podaci u međutablici, potrebno je prvo kreirati pružatelja service, a zatim samu uslugu. Da bi se kreirao novi pružatelj usluge
 potrebno je pozvati:
 
 http://localhost:8080/new-pruzatelj (POST) i u requestbody upisati:
@@ -24,19 +24,19 @@ http://localhost:8080/new-pruzatelj (POST) i u requestbody upisati:
     "nazivPruzatelja": "some-random-value"
 }
 
-Da bi se zatim kreirala nova usluga, potrebno je pozvati:
+Da bi se zatim kreirala nova service, potrebno je pozvati:
 
-http://localhost:8080/new-usluga (POST) i u requestbody upisati:
+http://localhost:8080/new-service (POST) i u requestbody upisati:
 
 {
-    "opisUsluge": "Default usluga description3",
+    "opisUsluge": "Default service description3",
     "pruzateljiUsluge": [ //ID mora bit koji vec postoji, ovo je demonstrature radi samo //
         {"id": 3},
         {"id": 4}
     ]
 }
 
-Nakon pozivanja /new-usluga endpointa kreirat će se veza u međutablici usluga_id : pruzatelj_usluge_id
+Nakon pozivanja /new-service endpointa kreirat će se veza u međutablici usluga_id : pruzatelj_usluge_id
 
 ### Dohvaćanje podataka
 

@@ -11,23 +11,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "pruzateljUsluge")
+@Table(name = "serviceProvider")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
-public class PruzateljUsluge {
+        property = "id",
+        scope = ServiceProvider.class)
+public class ServiceProvider {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
 
-    @Column(name="nazivPruzatelja")
-    private String nazivPruzatelja;
+    @Column(name="providerName")
+    private String providerName;
 
-    @ManyToMany(mappedBy = "pruzateljiUsluge", fetch = FetchType.EAGER)
-    private Set<Usluga> usluge = new HashSet<>();
+    @ManyToMany(mappedBy = "serviceProviders", fetch = FetchType.EAGER)
+    private Set<Service> services = new HashSet<>();
 }
