@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class ServiceProviderController {
@@ -21,8 +22,12 @@ public class ServiceProviderController {
 
     @GetMapping("/providers")
     public List<ServiceProvider> getProviders(){
-        List<ServiceProvider> list = serviceProviderRepository.findAll();
-        return list;
+        return serviceProviderRepository.findAll();
+    }
+
+    @GetMapping("/service-provider/{id}")
+    public Optional<ServiceProvider> getProvider(@PathVariable long id){
+        return serviceProviderService.getProvider(id);
     }
 
     @GetMapping("/service-provider")

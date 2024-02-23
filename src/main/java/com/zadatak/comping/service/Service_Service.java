@@ -9,8 +9,6 @@ import com.zadatak.comping.specification.ServiceSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +26,9 @@ public class Service_Service {
     ServiceProviderRepository serviceProviderRepository;
 
     @Transactional
-    public Service findByID(long id){
-        Optional<Service> service = serviceRepository.findByIdWithProviders(id);
-        service.ifPresent(s -> s.getServiceProviders().size());
-
-        System.out.println(service);
-        return service.orElse(null);
+    public Optional<Service> findByID(long id){
+        Optional<Service> service = serviceRepository.findById(id);
+        return service;
     }
 
     public Service addService(Service service, long id){

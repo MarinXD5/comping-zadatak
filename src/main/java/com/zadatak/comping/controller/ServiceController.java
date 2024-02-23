@@ -4,11 +4,11 @@ import com.zadatak.comping.entity.Service;
 import com.zadatak.comping.repository.ServiceRepository;
 import com.zadatak.comping.service.Service_Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class ServiceController {
@@ -25,8 +25,8 @@ public class ServiceController {
         return serviceRepository.findAll();
     }
 
-    @GetMapping("/getService/{id}")
-    public Service getServiceById(@PathVariable long id){
+    @GetMapping("/service/{id}")
+    public Optional<Service> getServiceById(@PathVariable long id){
         return serviceService.findByID(id);
     }
 

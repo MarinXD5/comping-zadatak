@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Service
@@ -58,5 +59,9 @@ public class ServiceProvider_Service {
         } catch (Exception e) {
             System.out.println("Error while deleting ServiceProvider: " + e.getMessage());
         }
+    }
+
+    public Optional<ServiceProvider> getProvider(long id) {
+        return serviceProviderRepository.findById(id);
     }
 }
