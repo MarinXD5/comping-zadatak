@@ -1,43 +1,38 @@
 # comping-zadatak
 
-Prilikom prijave za posao za Java Developera u Comping, bilo je potrebno riješiti zadatak i pohraniti ga u GitHub repozitorij.
-Ovdje se nalazi source code za zadani zadatak.
+During a job application for a Java Deceloper at Comping, I was given a project which I had to solve and store in a GitHub repository.
+Here is a source code for the given project.
 
-## Instalacija
+## Instalation
 
-Prilikom instalacije ovog programa, potrebno je lokalno klonirati ovaj repozitorij. Nakon toga, potrebno je otvoriti program u jednom od IDE-ova: Intellij, Eclipse, VSC...
-Nakon otvaranja projekta u IDE-u, potrebno je pokrenuti program klikom na zelenu strelicu da bi se započelo izvršavanje programa.
+During an installation process of this project, it is neccessary to clone this repository locally. After cloning the repository, you need to open the project in one of IDE's: Intellij, Eclipse, VSC...
+After successfully entering the project, you need to run it by clicking on the green arrow to start executing the code.
 
-## Testiranje API-ja
+## API testing
 
-Svaki API poziva jednu controller metodu. 
+Every API is calling exactly one controller method.
 
-### Kreiranje novih podataka
+### New data creation
 
-Za kreiranje novih entrya u bazi podataka, potrebno je prvo kreirati novog pruzatelja. Razlog tomu je, jer iako postoji veza vise-na-vise, jedna strana mora biti "owning" strana. Za potrebe
-ovog zadatka to je Usluga. Stoga, da bi se mogli kreirati i vezati podaci u međutablici, potrebno je prvo kreirati pružatelja service, a zatim samu uslugu. Da bi se kreirao novi pružatelj usluge
-potrebno je pozvati:
+To create new database entries, you need to firstly create a new service provider, because, even though there is a relationship many-to-many, one side has to be the "owning" side. For this project
+the Service.java was selected to be the owning side, while the ServiceProvider.java is the non-owning side. In order to create and connect the data in the mid-table, you need to firstly create a
+service provider and then the service itself. To create a new service provider you need to call this API:
 
-http://localhost:8080/new-pruzatelj (POST) i u requestbody upisati:
-
-{
-    "nazivPruzatelja": "some-random-value"
-}
-
-Da bi se zatim kreirala nova service, potrebno je pozvati:
-
-http://localhost:8080/new-service (POST) i u requestbody upisati:
+http://localhost:8080/service-provider (POST REQUEST) and in a request body write:
 
 {
-    "opisUsluge": "Default service description3",
-    "pruzateljiUsluge": [ //ID mora bit koji vec postoji, ovo je demonstrature radi samo //
-        {"id": 3},
-        {"id": 4}
-    ]
+    "providerName": "Some-random-value-string"
 }
 
-Nakon pozivanja /new-service endpointa kreirat će se veza u međutablici usluga_id : pruzatelj_usluge_id
+To create a new service, you need to call this API:
 
-### Dohvaćanje podataka
+http://localhost:8080/service/{service_provider_id} (POST REQUEST) and in the request body write:
+{
+    "serviceDescription": "Some-random-value-string"
+}
 
-#TODO
+This will connect a service with the service provider and add a service provider to the serviceProvider set of the Service entity
+
+### Data fetching
+
+#TODO (error)
