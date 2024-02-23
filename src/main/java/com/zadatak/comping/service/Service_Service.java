@@ -8,6 +8,9 @@ import com.zadatak.comping.repository.ServiceRepository;
 import com.zadatak.comping.specification.ServiceSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
+@Transactional
 public class Service_Service {
 
     @Autowired
@@ -23,17 +27,31 @@ public class Service_Service {
     @Autowired
     ServiceProviderRepository serviceProviderRepository;
 
-    public Service addService(Service service, long id){
-        /* Method to add and connect service with its provider. Takes in a Service (engl. Service) entity
-        *  and an ID of a ServiceProvider (engl. ServiceProvider) entity. The ServiceProvider HAS to exist prior
-        *  to trying to connect the two!!! Returns a newly created Service **/
-        Optional<ServiceProvider> serviceProvider = serviceProviderRepository.findById(id);
+    @Transactional
+    public Service findByID(long id){
+        Optional<Service> service = serviceRepository.findByIdWithProviders(id);
+        service.ifPresent(s -> s.getServiceProviders().size());
 
-        if(serviceProvider.isPresent()){
-            service.getServiceProviders().add(serviceProvider.get());
-            serviceRepository.save(service);
-            return service;
+        System.out.println(service);
+        return service.orElse(null);
+    }
+
+    public Service addService(Service service, long id){
+        /* Method to add and connect service with its provider. Takes in a Service entity
+        *  and an ID of a ServiceProvider entity. The ServiceProvider HAS to exist prior
+        *  to trying to connect the two!!! Returns a newly created Service **/
+        try{
+            Optional<ServiceProvider> serviceProvider = serviceProviderRepository.findById(id);
+
+            if(serviceProvider.isPresent()){
+                service.getServiceProviders().add(serviceProvider.get());
+                serviceRepository.save(service);
+                return service;
+            }
+        } catch(Exception e){
+            System.out.println("Error trying to add a new service: " + e.getMessage());
         }
+
         return null;
     }
 
@@ -65,19 +83,28 @@ public class Service_Service {
         return null;
     }
 
-    public void editService(long id, Service service) {
-        /* Method for editing a Service (engl. Service) object. Takes in ID and Service object **/
+    public void editService(long id_service, long id_provider_existing, long id_provider_wanted, Service service) {
+        /* Method for editing a Service object and it's associations.
+        *  Takes in ServiceID, ExistingProviderID, WantedProviderID and Service object **/
         try {
-            Service serviceFetched = serviceRepository.getReferenceById(id);
-            serviceFetched.setServiceDescription(service.getServiceDescription());
-            serviceRepository.save(serviceFetched);
+            Service newService = serviceRepository.getReferenceById(id_service);
+            ServiceProvider serviceProviderExisting = serviceProviderRepository.getReferenceById(id_provider_existing);
+            ServiceProvider serviceProviderWanted = serviceProviderRepository.getReferenceById(id_provider_wanted);
+
+            newService.setServiceDescription(service.getServiceDescription());
+
+            newService.getServiceProviders().remove(serviceProviderExisting);
+
+            newService.getServiceProviders().add(serviceProviderWanted);
+
+            serviceRepository.save(newService);
         } catch (Exception e) {
             System.out.println("Error while editing service: " + e.getMessage());
         }
     }
 
     public void deleteService(long id) {
-        /* Method to delete a Service (engl. Service). Takes in an ID and Service object **/
+        /* Method to delete a Service. Takes in an ID and Service object **/
         try {
             serviceRepository.deleteById(id);
         } catch (Exception e) {

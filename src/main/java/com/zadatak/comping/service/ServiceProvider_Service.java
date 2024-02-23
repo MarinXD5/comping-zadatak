@@ -32,9 +32,9 @@ public class ServiceProvider_Service {
     public void addNewServiceProvider(ServiceProvider serviceProvider) {
         /* Method to add a new ServiceProvider. Takes in a ServiceProvider object and saves it in a repo **/
         try {
-            ServiceProvider noviPruzatelj = new ServiceProvider();
-            noviPruzatelj.setProviderName(serviceProvider.getProviderName());
-            serviceProviderRepository.save(noviPruzatelj);
+            ServiceProvider newServiceProvider = new ServiceProvider();
+            newServiceProvider.setProviderName(serviceProvider.getProviderName());
+            serviceProviderRepository.save(newServiceProvider);
         } catch (Exception e) {
             System.out.println("Error while adding new ServiceProvider: " + e.getMessage());
         }
