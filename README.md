@@ -26,13 +26,45 @@ http://localhost:8080/service-provider (POST REQUEST) and in a request body writ
 
 To create a new service, you need to call this API:
 
-http://localhost:8080/service/{service_provider_id} (POST REQUEST) and in the request body write:
+`http://localhost:8080/service/{service_provider_id}` (POST REQUEST) and in the request body write:
+`
 {
     "serviceDescription": "Some-random-value-string"
 }
+`
 
-This will connect a service with the service provider and add a service provider to the serviceProvider set of the Service entity
+This will create a new Service entity, connect a service with the service provider and add a service provider to the serviceProvider set of the Service entity
+
+If you only want to connect the existing Service and ServiceProvider entities you can do so by calling:
+
+`http://localhost:8080/add-service-provider/{id_service}/{id_provider}` and this will only connect the existing Service and ServiceProvider entities in the join table.
 
 ### Data fetching
 
-#TODO (error)
+Fetching either `Service` or `ServiceProvider` is done by calling the:
+
+`http://localhost:8080/services` or `http://localhost:8080/providers` API.
+
+Fetching either one by id is done by calling:
+
+`http://localhost:8080/service/{id}` or `http://localhost:8080/service-provider/{id}`.
+
+###Editing
+
+You can edit data (the already existing and change `Service` - `ServiceProvider` connections) by calling one of these 2 API's:
+
+`http://localhost:8080/service/{service_id}/{existing_provider_id}/{wanted_provider_id}`.
+
+or
+
+`http://localhost:8080/service-provider/{service-provider-id}}`.
+
+###Deleting
+
+Deleting any entry is pretty straightforward. Call the endpoint with the coresponding ID and you will delete the entity with that ID:
+
+`http://localhost:8080/service/{id}`
+
+or
+
+`http://localhost:8080/service-provider/{service-provider-id}}`
