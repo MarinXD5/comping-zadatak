@@ -87,7 +87,7 @@ public class Service_Service {
             ServiceProvider serviceProviderExisting = serviceProviderRepository.getReferenceById(id_provider_existing);
             ServiceProvider serviceProviderWanted = serviceProviderRepository.getReferenceById(id_provider_wanted);
 
-            newService.setServiceDescription(service);
+            newService.setServiceDescription(service.trim());
 
             newService.getServiceProviders().remove(serviceProviderExisting);
 

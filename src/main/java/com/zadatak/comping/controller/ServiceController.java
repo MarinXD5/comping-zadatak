@@ -1,9 +1,9 @@
 package com.zadatak.comping.controller;
 
-import com.google.gson.Gson;
 import com.zadatak.comping.entity.Service;
 import com.zadatak.comping.repository.ServiceRepository;
 import com.zadatak.comping.service.Service_Service;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,7 +52,9 @@ public class ServiceController {
 
     @PatchMapping("/service/{id_service}/{id_provider_existing}/{id_provider_wanted}")
     public void editService(@PathVariable long id_service,@PathVariable long id_provider_existing, @PathVariable long id_provider_wanted, @RequestBody String service) {
-        serviceService.editService(id_service,id_provider_existing,id_provider_wanted,service);
+        JSONObject jsonObj = new JSONObject(service);
+        String parsedService = jsonObj.getString("service");
+        serviceService.editService(id_service,id_provider_existing,id_provider_wanted,parsedService);
     }
 
     @GetMapping("/remove-connection/{id_service}/{id_provider}")
