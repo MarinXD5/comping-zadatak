@@ -1,5 +1,6 @@
 package com.zadatak.comping.controller;
 
+import com.google.gson.Gson;
 import com.zadatak.comping.entity.Service;
 import com.zadatak.comping.repository.ServiceRepository;
 import com.zadatak.comping.service.Service_Service;
@@ -18,7 +19,6 @@ public class ServiceController {
 
     @Autowired
     ServiceRepository serviceRepository;
-
 
     @GetMapping("/services")
     public List<Service> getAllServices(){
@@ -50,9 +50,9 @@ public class ServiceController {
         return serviceService.addServiceProvider(id_service, id_provider);
     }
 
-    @PutMapping("/service/{id_service}/{id_provider_existing}/{id_provider_wanted}")
-    public void editService(@PathVariable long id_service,@PathVariable long id_provider_existing, @PathVariable long id_provider_wanted, @RequestBody Service service) {
-        serviceService.editService(id_service,id_provider_existing,id_provider_wanted, service);
+    @PatchMapping("/service/{id_service}/{id_provider_existing}/{id_provider_wanted}")
+    public void editService(@PathVariable long id_service,@PathVariable long id_provider_existing, @PathVariable long id_provider_wanted, @RequestBody String service) {
+        serviceService.editService(id_service,id_provider_existing,id_provider_wanted,service);
     }
 
     @GetMapping("/remove-connection/{id_service}/{id_provider}")

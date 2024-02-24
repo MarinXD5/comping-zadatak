@@ -18,9 +18,6 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Service {
 
     @Id
@@ -32,6 +29,7 @@ public class Service {
     private String serviceDescription;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
     @JoinTable(
             name = "serviceProviders",
             joinColumns = @JoinColumn(name = "service_id"),

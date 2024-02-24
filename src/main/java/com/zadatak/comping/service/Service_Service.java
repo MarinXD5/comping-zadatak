@@ -79,7 +79,7 @@ public class Service_Service {
     }
 
     @Transactional
-    public void editService(long id_service, long id_provider_existing, long id_provider_wanted, Service service) {
+    public void editService(long id_service, long id_provider_existing, long id_provider_wanted, String service) {
         /* Method for editing a Service object and it's associations.
         *  Takes in ServiceID, ExistingProviderID, WantedProviderID and Service object **/
         try {
@@ -87,7 +87,7 @@ public class Service_Service {
             ServiceProvider serviceProviderExisting = serviceProviderRepository.getReferenceById(id_provider_existing);
             ServiceProvider serviceProviderWanted = serviceProviderRepository.getReferenceById(id_provider_wanted);
 
-            newService.setServiceDescription(service.getServiceDescription());
+            newService.setServiceDescription(service);
 
             newService.getServiceProviders().remove(serviceProviderExisting);
 
