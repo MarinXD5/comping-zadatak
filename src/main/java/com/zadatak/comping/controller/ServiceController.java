@@ -55,6 +55,11 @@ public class ServiceController {
         serviceService.editService(id_service,id_provider_existing,id_provider_wanted, service);
     }
 
+    @GetMapping("/remove-connection/{id_service}/{id_provider}")
+    public void removeConnection(@PathVariable long id_service, @PathVariable long id_provider){
+        serviceService.removeConnection(id_service, id_provider);
+    }
+
     @DeleteMapping("/service/{id}")
     public void deleteService(@PathVariable long id){
         serviceService.deleteService(id);

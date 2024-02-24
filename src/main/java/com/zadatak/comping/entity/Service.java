@@ -1,7 +1,9 @@
 package com.zadatak.comping.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +18,9 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Service {
 
     @Id
@@ -27,7 +32,6 @@ public class Service {
     private String serviceDescription;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonManagedReference
     @JoinTable(
             name = "serviceProviders",
             joinColumns = @JoinColumn(name = "service_id"),

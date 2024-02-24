@@ -1,6 +1,6 @@
 package com.zadatak.comping.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +15,9 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class ServiceProvider {
 
     @Id
@@ -26,7 +29,7 @@ public class ServiceProvider {
     private String providerName;
 
     @ManyToMany(mappedBy = "serviceProviders", fetch = FetchType.EAGER)
-    @JsonBackReference
+    @JsonIgnore
     private Set<Service> services = new HashSet<>();
 
     @Override

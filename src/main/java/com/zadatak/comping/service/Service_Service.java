@@ -119,4 +119,21 @@ public class Service_Service {
         }
         return null;
     }
+
+    public void removeConnection(long idService, long idProvider) {
+        try{
+            Service service = serviceRepository.getReferenceById(idService);
+            ServiceProvider serviceProvider = serviceProviderRepository.getReferenceById(idProvider);
+
+            if(service.getServiceProviders().contains(serviceProvider)){
+                service.getServiceProviders().remove(serviceProvider);
+            }
+            else{
+                throw new Exception();
+            }
+        } catch(Exception e){
+            System.out.println("Error while trying to delete a service-provider connection: " + e.getMessage());
+        }
+
+    }
 }
