@@ -49,7 +49,7 @@ Fetching either one by id is done by calling:
 
 `http://localhost:8080/service/{id}` or `http://localhost:8080/service-provider/{id}`.
 
-###Editing
+### Editing
 
 You can edit data (the already existing and change `Service` - `ServiceProvider` connections) by calling one of these 2 API's:
 
@@ -59,7 +59,7 @@ or
 
 `http://localhost:8080/service-provider/{service-provider-id}}`.
 
-###Deleting
+### Deleting
 
 Deleting any entry is pretty straightforward. Call the endpoint with the coresponding ID and you will delete the entity with that ID:
 
